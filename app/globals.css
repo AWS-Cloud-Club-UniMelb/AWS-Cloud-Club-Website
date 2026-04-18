@@ -1,26 +1,227 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+@theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Brand colour system ─────────────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --color-bg-primary:    #0A0A0F;
+  --color-bg-secondary:  #12101E;
+  --color-bg-tertiary:   #1C1830;
+  --color-surface:       #1E1A3A;
+  --color-card:          #1A1535;
+
+  /* Accent / brand */
+  --color-accent-primary:   #6B3FD4;
+  --color-accent-secondary: #8B5CF6;
+  --color-accent-glow:      rgba(107, 63, 212, 0.25);
+  --color-gradient-start:   #3D1FA3;
+  --color-gradient-end:     #1A0A5E;
+
+  /* Text */
+  --color-text-primary:   #F0ECFF;
+  --color-text-secondary: #A99CC0;
+  --color-text-muted:     #5C5275;
+
+  /* Borders */
+  --color-border:        rgba(139, 92, 246, 0.15);
+  --color-border-active: rgba(139, 92, 246, 0.50);
+
+  color-scheme: dark;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+::selection {
+  background: rgba(107, 63, 212, 0.3);
+  color: #F0ECFF;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.4);
+}
+
+/* ─── Utility classes ────────────────────────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Subtle purple mesh hero gradient (used inline via style prop) */
+.hero-gradient {
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(61, 31, 163, 0.18), transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(107, 31, 163, 0.14), transparent 55%);
+}
+
+/* Noise overlay — fixed, pointer-events-none, applied to body via class */
+.noise-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  100% { transform: scale(1.9); opacity: 0;   }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+.animate-marquee {
+  display: flex;
+  animation: marquee 40s linear infinite;
+}
+.animate-marquee:hover { animation-play-state: paused; }
+
+@utility animate-marquee-reverse {
+  display: flex;
+  animation: marquee-reverse 40s linear infinite;
+  &:hover { animation-play-state: paused; }
+}
+
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.animate-pulse-ring   { animation: pulse-ring  2.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
+.animate-spin-slow    { animation: spin-slow   22s linear infinite; }
+.animate-spin-reverse { animation: spin-reverse 16s linear infinite; }
+.animate-float        { animation: float        5s ease-in-out infinite; }
+
+/* ─── Animated brand gradient (matches club logo palette) ────────────────── */
+@keyframes gradient-shift {
+  0%   { background-position:   0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position:   0% 50%; }
+}
+
+.animated-gradient {
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(139, 92, 246, 0.28), transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(61, 31, 163, 0.32), transparent 55%),
+    radial-gradient(ellipse at 60% 20%, rgba(180, 70, 220, 0.18), transparent 60%),
+    linear-gradient(120deg, #1A0A5E 0%, #3D1FA3 25%, #6B3FD4 50%, #3D1FA3 75%, #1A0A5E 100%);
+  background-size: 200% 200%, 220% 220%, 240% 240%, 300% 300%;
+  animation: gradient-shift 18s ease-in-out infinite;
+}
+
+/* ─── Interactive CSS utilities (server-component safe hover states) ─────── */
+.btn-accent {
+  background: var(--color-accent-primary);
+  color: white;
+  transition: background 0.2s ease;
+}
+.btn-accent:hover  { background: var(--color-accent-secondary); }
+.btn-accent:active { transform: scale(0.98); }
+
+.btn-ghost {
+  background: rgba(139, 92, 246, 0.06);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.btn-ghost:hover {
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--color-text-primary);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.card-interactive {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.card-interactive:hover {
+  border-color: var(--color-border-active) !important;
+}
+.card-glow:hover {
+  box-shadow: 0 0 24px var(--color-accent-glow);
+}
+.card-hover-bg:hover {
+  background: var(--color-bg-secondary) !important;
+}
+
+.footer-link {
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease;
+}
+.footer-link:hover { color: var(--color-text-primary); }
+
+.cert-badge {
+  background: rgba(139, 92, 246, 0.06);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  color: var(--color-text-muted);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.cert-badge:hover {
+  color: var(--color-text-secondary);
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+.icon-link {
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+.icon-link:hover { color: var(--color-text-secondary); }
+
+.faq-card {
+  border: 1px solid var(--color-border);
+  transition: border-color 0.2s ease;
+}
+.faq-card:hover { border-color: var(--color-border-active); }
