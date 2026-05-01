@@ -7,6 +7,7 @@ import {
   Heart,
 } from "@phosphor-icons/react/dist/ssr";
 import AnimatedSection from "@/components/AnimatedSection";
+import CloudMascot from "@/components/CloudMascot";
 
 const timeline = [
   {
@@ -100,38 +101,38 @@ export default function AboutPage() {
     <>
       {/* Hero */}
       <section
-        className="relative min-h-[60dvh] grid-bg flex items-end overflow-hidden pt-32 pb-0"
+        className="relative min-h-[60dvh] grid-bg flex items-center pt-32 pb-0"
         style={{
           background:
             "radial-gradient(ellipse 60% 50% at 30% 60%, rgba(61,31,163,0.15), transparent 65%), var(--color-bg-primary)",
         }}
       >
-        <div
-          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to top, var(--color-bg-primary), transparent)",
-          }}
-        />
         <div className="max-w-7xl mx-auto px-6 w-full pb-20">
-          <AnimatedSection>
-            <p
-              className="text-xs font-semibold uppercase tracking-widest mb-5"
-              style={{ color: "#8B5CF6" }}
-            >
-              About
-            </p>
-          </AnimatedSection>
-          <AnimatedSection delay={0.06}>
-            <h1
-              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.02] max-w-4xl"
-              style={{ color: "#F0ECFF" }}
-            >
-              We build real things
-              <br />
-              <span style={{ color: "#5C5275" }}>on the cloud.</span>
-            </h1>
-          </AnimatedSection>
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div>
+              <AnimatedSection>
+                <p
+                  className="text-xs font-semibold uppercase tracking-widest mb-5"
+                  style={{ color: "#8B5CF6" }}
+                >
+                  About
+                </p>
+              </AnimatedSection>
+              <AnimatedSection delay={0.06}>
+                <h1
+                  className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.02] max-w-4xl"
+                  style={{ color: "#F0ECFF" }}
+                >
+                  We build real things
+                  <br />
+                  <span style={{ color: "#5C5275" }}>on the cloud.</span>
+                </h1>
+              </AnimatedSection>
+            </div>
+            <div className="shrink-0">
+              <CloudMascot size={300} />
+            </div>
+          </div>
         </div>
       </section>
 
