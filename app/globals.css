@@ -225,3 +225,27 @@ body {
   transition: border-color 0.2s ease;
 }
 .faq-card:hover { border-color: var(--color-border-active); }
+
+@keyframes mascot-entrance {
+  0%   { transform: translate(280px, -160px) rotate(40deg)  scale(0.70); opacity: 0;   }
+  5%   { transform: translate(250px, -135px) rotate(36deg)  scale(0.74); opacity: 0.15;}
+  10%  { transform: translate(220px, -110px) rotate(32deg)  scale(0.78); opacity: 0.3; }
+  15%  { transform: translate(190px, -83px)  rotate(27deg)  scale(0.82); opacity: 0.45;}
+  20%  { transform: translate(160px, -58px)  rotate(23deg)  scale(0.85); opacity: 0.6; }
+  25%  { transform: translate(133px, -32px)  rotate(19deg)  scale(0.88); opacity: 0.7; }
+  30%  { transform: translate(108px, -8px)   rotate(15deg)  scale(0.91); opacity: 0.8; }
+  35%  { transform: translate(85px,  12px)   rotate(11deg)  scale(0.94); opacity: 0.9; }
+  40%  { transform: translate(63px,  26px)   rotate(8deg)   scale(0.96); opacity: 1;   }
+  45%  { transform: translate(44px,  34px)   rotate(5deg)   scale(0.98); }
+  50%  { transform: translate(26px,  38px)   rotate(3deg)   scale(1.0);  }
+  55%  { transform: translate(11px,  36px)   rotate(1deg)   scale(1.01); }
+  60%  { transform: translate(-1px,  30px)   rotate(-1deg)  scale(1.02); }
+  65%  { transform: translate(-6px,  22px)   rotate(-2deg)  scale(1.03); }
+  70%  { transform: translate(-8px,  15px)   rotate(-2.5deg)scale(1.02); }
+  75%  { transform: translate(-6px,  9px)    rotate(-2deg)  scale(1.02); }
+  80%  { transform: translate(-4px,  5px)    rotate(-1deg)  scale(1.01); }
+  85%  { transform: translate(-2px,  2px)    rotate(-0.5deg)scale(1.01); }
+  90%  { transform: translate(-1px,  1px)    rotate(0deg)   scale(1.0);  }
+  95%  { transform: translate(0px,   0px)    rotate(0deg)   scale(1.0);  }
+  100% { transform: translate(0, 0)          rotate(0deg)   scale(1);    }
+}
