@@ -442,7 +442,7 @@ export default function HeroVisual() {
   return (
     <div
       className="relative w-full max-w-[1400px] flex items-center justify-center select-none overflow-hidden"
-      style={{ height: "70vw", marginTop: "-20vw" }}
+      style={{ height: "55vw", marginTop: "5vw" }}
     >
       {/* Soft pulse around the globe — stays flat on screen, behind the scene */}
       <div
