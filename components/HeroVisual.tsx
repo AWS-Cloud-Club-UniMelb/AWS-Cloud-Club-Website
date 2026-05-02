@@ -3,6 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
+const COLOR_BLACK = 0x000000;
+const COLOR_WHITE = 0xffffff;
+
+const cssVar = (name: string, fallback: string) => {
+  if (typeof window === "undefined") return fallback;
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return v || fallback;
+};
+
 /* ── Orbit config ──────────────────────────────────────────────────────── */
 type OrbitItem = { icon: string; label: string; delay: number };
 
@@ -75,6 +84,12 @@ function HeroScene() {
     if (!container) return;
 
     const size = container.clientWidth || 820;
+    const accentPrimary = cssVar("--color-accent-primary", "#6B3FD4");
+    const accentSecondary = cssVar("--color-accent-secondary", "#8B5CF6");
+    const heroEarthTint = cssVar("--color-hero-earth-tint", "#C9B8FF");
+    const heroAmbient = cssVar("--color-hero-ambient", "#4A2D9C");
+    const heroLabel = cssVar("--color-hero-label", "rgba(169, 156, 192, 0.95)");
+    const heroShadow = cssVar("--color-hero-shadow", "rgba(10, 10, 15, 0.9)");
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
@@ -84,7 +99,7 @@ function HeroScene() {
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(size, size);
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(COLOR_BLACK, 0);
     renderer.domElement.style.opacity = "0";
     renderer.domElement.style.transition = "opacity 600ms ease";
     container.appendChild(renderer.domElement);
@@ -99,9 +114,9 @@ function HeroScene() {
     const earthGeometry = new THREE.SphereGeometry(1, 96, 96);
     const earthMaterial = new THREE.MeshPhongMaterial({
       map: earthTexture,
-      color: new THREE.Color(0xc9b8ff),
+      color: new THREE.Color(heroEarthTint),
       shininess: 12,
-      specular: new THREE.Color(0x6b3fd4),
+      specular: new THREE.Color(accentPrimary),
     });
     const earth = new THREE.Mesh(earthGeometry, earthMaterial);
     earth.rotation.x = 0.28;
@@ -113,7 +128,7 @@ function HeroScene() {
       transparent: true,
       side: THREE.BackSide,
       depthWrite: false,
-      uniforms: { uColor: { value: new THREE.Color(0x8b5cf6) } },
+      uniforms: { uColor: { value: new THREE.Color(accentSecondary) } },
       vertexShader: `
         varying vec3 vNormal;
         void main() {
@@ -134,10 +149,10 @@ function HeroScene() {
     scene.add(atmosphere);
 
     /* Lights */
-    const ambient = new THREE.AmbientLight(0x4a2d9c, 0.55);
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
+    const ambient = new THREE.AmbientLight(heroAmbient, 0.55);
+    const keyLight = new THREE.DirectionalLight(COLOR_WHITE, 1.8);
     keyLight.position.set(5, 2, 4);
-    const rimLight = new THREE.DirectionalLight(0x8b5cf6, 1.1);
+    const rimLight = new THREE.DirectionalLight(accentSecondary, 1.1);
     rimLight.position.set(-4, -1, -3);
     scene.add(ambient, keyLight, rimLight);
 
@@ -158,7 +173,7 @@ function HeroScene() {
       }
       const geom = new THREE.BufferGeometry().setFromPoints(pts);
       const mat = new THREE.LineBasicMaterial({
-        color: 0x8b5cf6,
+        color: accentSecondary,
         transparent: true,
         opacity,
       });
@@ -231,10 +246,10 @@ function HeroScene() {
           drawRoundedImage(ctx, img, (CW - s) / 2, 30, s, s, ICON_CORNER_R);
         }
         ctx.font = "700 26px Menlo, Monaco, Consolas, monospace";
-        ctx.fillStyle = "rgba(169, 156, 192, 0.95)";
+        ctx.fillStyle = heroLabel;
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
-        ctx.shadowColor = "rgba(10, 10, 15, 0.9)";
+        ctx.shadowColor = heroShadow;
         ctx.shadowBlur = 6;
         ctx.fillText(item.label, CW / 2, 252);
         ctx.shadowBlur = 0;

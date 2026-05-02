@@ -30,6 +30,11 @@
   --color-border:        rgba(139, 92, 246, 0.15);
   --color-border-active: rgba(139, 92, 246, 0.50);
 
+  --color-hero-earth-tint: #C9B8FF;
+  --color-hero-ambient: #4A2D9C;
+  --color-hero-label: rgba(169, 156, 192, 0.95);
+  --color-hero-shadow: rgba(10, 10, 15, 0.9);
+
   color-scheme: dark;
 }
 

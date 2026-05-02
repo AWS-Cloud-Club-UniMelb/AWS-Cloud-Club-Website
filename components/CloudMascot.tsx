@@ -4,6 +4,9 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
+const COLOR_BLACK = 0x000000;
+const COLOR_WHITE = 0xffffff;
+
 // Clip names from the GLB
 const BLINK_CLIPS = ["Cloud_LeftEyeAction.001", "Cloud_RightEyeAction"];
 const WAVE_CLIPS = ["Cloud_SmileAction.002", "Cloud_RightPawAction.002"];
@@ -24,21 +27,25 @@ export default function CloudMascot({
     const container = containerRef.current;
     if (!container) return;
 
+    const accent = typeof window === "undefined"
+      ? "#8B5CF6"
+      : getComputedStyle(document.documentElement).getPropertyValue("--color-accent-secondary").trim() || "#8B5CF6";
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 5000);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(size, size);
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(COLOR_BLACK, 0);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
     container.appendChild(renderer.domElement);
 
-    const ambient = new THREE.AmbientLight(0x8b5cf6, 0.6);
-    const key = new THREE.DirectionalLight(0xffffff, 2.0);
+    const ambient = new THREE.AmbientLight(accent, 0.6);
+    const key = new THREE.DirectionalLight(COLOR_WHITE, 2.0);
     key.position.set(0, -500, 200);
-    const fill = new THREE.DirectionalLight(0x8b5cf6, 0.8);
+    const fill = new THREE.DirectionalLight(accent, 0.8);
     fill.position.set(0, 500, -200);
     scene.add(ambient, key, fill);
 
