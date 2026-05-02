@@ -3,7 +3,7 @@ import { CloudLightning } from '@phosphor-icons/react/dist/ssr'
 
 export default function Footer() {
   return (
-    <footer style={{ background: 'var(--color-bg-secondary)', borderTop: '1px solid var(--color-border)' }}>
+    <footer className="bg-secondary border-t-default">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
 
@@ -11,20 +11,19 @@ export default function Footer() {
           <div className="md:col-span-4">
             <Link href="/" className="flex items-center gap-2.5 mb-4 w-fit">
               <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center"
-                style={{ background: 'rgba(107,63,212,0.12)', border: '1px solid rgba(139,92,246,0.25)' }}
+                className="chip w-8 h-8 rounded-lg flex items-center justify-center"
               >
-                <CloudLightning size={18} weight="duotone" style={{ color: '#8B5CF6' }} />
+                <CloudLightning size={18} weight="duotone" className="text-accent" />
               </div>
-              <span className="font-semibold text-sm tracking-tight" style={{ color: '#F0ECFF' }}>
+              <span className="font-semibold text-sm tracking-tight text-primary">
                 AWS Cloud Club
               </span>
             </Link>
-            <p className="text-sm leading-relaxed max-w-[30ch]" style={{ color: '#5C5275' }}>
+            <p className="text-sm leading-relaxed max-w-[30ch] text-muted">
               The official AWS Cloud Club at the University of Melbourne.
               Building the next generation of cloud engineers.
             </p>
-            <p className="mt-6 text-xs leading-relaxed" style={{ color: '#3D3560' }}>
+            <p className="mt-6 text-xs leading-relaxed text-muted">
               Affiliated with the University of Melbourne Student Union.
               <br />AWS Cloud Club Partner Program.
             </p>
@@ -34,7 +33,7 @@ export default function Footer() {
 
           {/* Navigation */}
           <div className="md:col-span-2">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#5C5275' }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-4 text-muted">
               Navigation
             </p>
             <ul className="flex flex-col gap-3">
@@ -56,7 +55,7 @@ export default function Footer() {
 
           {/* Resources */}
           <div className="md:col-span-2">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#5C5275' }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-4 text-muted">
               Resources
             </p>
             <ul className="flex flex-col gap-3">
@@ -77,7 +76,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div className="md:col-span-2">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#5C5275' }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-4 text-muted">
               Contact
             </p>
             <ul className="flex flex-col gap-3">
@@ -86,7 +85,7 @@ export default function Footer() {
                   club@awsunimelb.com
                 </a>
               </li>
-              <li className="text-sm" style={{ color: '#5C5275' }}>
+              <li className="text-sm text-muted">
                 Engineering Building<br />
                 University of Melbourne<br />
                 Parkville VIC 3010
@@ -96,14 +95,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div
-          className="mt-16 pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-          style={{ borderTop: '1px solid rgba(139,92,246,0.08)' }}
-        >
-          <p className="text-xs" style={{ color: '#3D3560' }}>
+        <div className="mt-16 pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-top-faint">
+          <p className="text-xs text-muted">
             &copy; 2025 AWS Cloud Club — University of Melbourne. All rights reserved.
           </p>
-          <p className="text-xs" style={{ color: '#3D3560' }}>
+          <p className="text-xs text-muted">
             Not affiliated with Amazon Web Services, Inc.
           </p>
         </div>

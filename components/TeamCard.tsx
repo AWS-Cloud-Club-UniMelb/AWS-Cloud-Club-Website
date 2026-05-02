@@ -8,7 +8,7 @@ interface TeamCardProps {
   bio: string
   certifications: string[]
   initials: string
-  hue: string // e.g. 'rgba(107,63,212,'
+  tone: 'purple' | 'blue' | 'green' | 'teal' | 'red' | 'amber' | 'pink'
 }
 
 const certLabels: Record<string, string> = {
@@ -22,34 +22,15 @@ const certLabels: Record<string, string> = {
   SCS: 'Security Specialty',
 }
 
-export default function TeamCard({ name, role, bio, certifications, initials, hue }: TeamCardProps) {
+export default function TeamCard({ name, role, bio, certifications, initials, tone }: TeamCardProps) {
   return (
     <div
-      className="relative p-7 rounded-2xl overflow-hidden transition-all duration-300"
-      style={{
-        background: 'var(--color-card)',
-        border: '1px solid var(--color-border)',
-      }}
-      onMouseEnter={e => {
-        const el = e.currentTarget as HTMLElement
-        el.style.borderColor = `${hue}0.4)`
-        el.style.boxShadow  = `0 0 30px ${hue}0.1)`
-      }}
-      onMouseLeave={e => {
-        const el = e.currentTarget as HTMLElement
-        el.style.borderColor = 'var(--color-border)'
-        el.style.boxShadow   = 'none'
-      }}
+      className={`team-card tone-${tone} relative p-7 rounded-2xl overflow-hidden`}
     >
       <div className="relative z-10 flex gap-5">
         {/* Avatar */}
         <div
-          className="w-14 h-14 rounded-xl shrink-0 flex items-center justify-center font-bold text-base"
-          style={{
-            background: `${hue}0.12)`,
-            border:     `1px solid ${hue}0.25)`,
-            color:      `${hue}1)`,
-          }}
+          className="team-avatar w-14 h-14 rounded-xl shrink-0 flex items-center justify-center font-bold text-base"
         >
           {initials}
         </div>
@@ -57,10 +38,10 @@ export default function TeamCard({ name, role, bio, certifications, initials, hu
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3 mb-1">
             <div>
-              <h3 className="font-semibold tracking-tight" style={{ color: '#F0ECFF' }}>
+              <h3 className="font-semibold tracking-tight text-primary">
                 {name}
               </h3>
-              <p className="text-xs font-medium mt-0.5" style={{ color: '#8B5CF6' }}>
+              <p className="text-xs font-medium mt-0.5 text-accent">
                 {role}
               </p>
             </div>
@@ -74,7 +55,7 @@ export default function TeamCard({ name, role, bio, certifications, initials, hu
             </div>
           </div>
 
-          <p className="text-sm leading-relaxed mt-3 mb-4" style={{ color: '#5C5275' }}>
+          <p className="text-sm leading-relaxed mt-3 mb-4 text-muted">
             {bio}
           </p>
 
