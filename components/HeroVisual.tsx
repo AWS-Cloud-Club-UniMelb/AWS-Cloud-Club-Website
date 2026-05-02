@@ -341,11 +341,7 @@ function HeroScene() {
   return (
     <div
       ref={containerRef}
-      style={{
-        width: "100%",
-        height: "100%",
-        aspectRatio: 1,
-      }}
+      className="hero-scene"
     />
   );
 }
@@ -405,24 +401,13 @@ function TypewriterTitle() {
 
   const cursor = (
     <span
-      className="inline-block w-[3px] ml-1 align-middle"
-      style={{
-        height: "1em",
-        background: "#8B5CF6",
-        opacity: showCursor ? 1 : 0,
-        animation: showCursor ? "blink-cursor 0.6s step-end infinite" : "none",
-      }}
+      className={`inline-block w-[3px] ml-1 align-middle h-[1em] bg-accent ${showCursor ? "opacity-100 blink-cursor" : "opacity-0"}`}
     />
   );
 
   return (
     <h2
-      className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter pointer-events-none text-center"
-      style={{
-        color: "#F0ECFF",
-        textShadow:
-          "0 2px 20px rgba(10,10,15,0.8), 0 0 40px rgba(139,92,246,0.3)",
-      }}
+      className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter pointer-events-none text-center text-primary hero-title-shadow"
     >
       <span>
         {line1}
@@ -441,17 +426,11 @@ function TypewriterTitle() {
 export default function HeroVisual() {
   return (
     <div
-      className="relative w-full max-w-[1400px] flex items-center justify-center select-none overflow-hidden"
-      style={{ height: "55vw", marginTop: "5vw" }}
+      className="hero-visual-shell relative w-full max-w-[1400px] flex items-center justify-center select-none overflow-hidden"
     >
       {/* Soft pulse around the globe — stays flat on screen, behind the scene */}
       <div
-        className="absolute rounded-full animate-pulse-ring pointer-events-none"
-        style={{
-          width: 560,
-          height: 560,
-          border: "1px solid rgba(107,63,212,0.18)",
-        }}
+        className="pulse-ring-border absolute rounded-full animate-pulse-ring pointer-events-none w-[560px] h-[560px]"
       />
 
       {/* Unified Three.js scene — globe + tilted Saturn-ring with sprite icons that share the depth buffer */}

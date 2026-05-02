@@ -25,23 +25,14 @@ export default function Navbar() {
 
   return (
     <header
-      style={scrolled ? {
-        background: 'rgba(18, 16, 30, 0.88)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid var(--color-border)',
-      } : undefined}
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'nav-header-scrolled' : ''}`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group shrink-0">
           <div
-            className="w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center transition-all duration-200"
-            style={{
-              background: 'rgba(107,63,212,0.12)',
-              border: '1px solid rgba(139,92,246,0.25)',
-            }}
+            className="chip w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center transition-all duration-200"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -49,12 +40,12 @@ export default function Navbar() {
               alt="AWS Cloud Club logo"
               width={36}
               height={36}
-              style={{ objectFit: 'cover', display: 'block' }}
+              className="object-cover block"
             />
           </div>
-          <span className="font-semibold text-sm tracking-tight" style={{ color: '#F0ECFF' }}>
+          <span className="font-semibold text-sm tracking-tight text-primary">
             AWS Cloud Club
-            <span className="font-normal ml-1.5 hidden sm:inline text-xs" style={{ color: '#5C5275' }}>
+            <span className="font-normal ml-1.5 hidden sm:inline text-xs text-muted">
               UniMelb
             </span>
           </span>
@@ -66,23 +57,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
-              style={pathname === link.href
-                ? { color: '#F0ECFF', background: 'rgba(139,92,246,0.1)' }
-                : { color: '#A99CC0' }
-              }
-              onMouseEnter={e => {
-                if (pathname !== link.href) {
-                  (e.currentTarget as HTMLElement).style.color = '#F0ECFF'
-                  ;(e.currentTarget as HTMLElement).style.background = 'rgba(139,92,246,0.06)'
-                }
-              }}
-              onMouseLeave={e => {
-                if (pathname !== link.href) {
-                  (e.currentTarget as HTMLElement).style.color = '#A99CC0'
-                  ;(e.currentTarget as HTMLElement).style.background = 'transparent'
-                }
-              }}
+              className={`px-4 py-2 rounded-lg text-sm font-medium nav-link ${pathname === link.href ? 'nav-link-active' : ''}`}
             >
               {link.label}
             </Link>
@@ -93,10 +68,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center">
           <Link
             href="/join"
-            className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all duration-200 active:scale-[0.98]"
-            style={{ background: '#6B3FD4' }}
-            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = '#8B5CF6')}
-            onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = '#6B3FD4')}
+            className="nav-cta px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 active:scale-[0.98]"
           >
             Join the Club
           </Link>
@@ -104,8 +76,7 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden transition-colors duration-200"
-          style={{ color: '#A99CC0' }}
+          className="md:hidden transition-colors duration-200 text-secondary hover-text-primary"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -121,23 +92,14 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden px-6 py-4 flex flex-col gap-1"
-            style={{
-              background: 'rgba(18, 16, 30, 0.95)',
-              backdropFilter: 'blur(20px)',
-              borderBottom: '1px solid var(--color-border)',
-            }}
+            className="nav-drawer md:hidden px-6 py-4 flex flex-col gap-1"
           >
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200"
-                style={pathname === link.href
-                  ? { color: '#F0ECFF', background: 'rgba(139,92,246,0.1)' }
-                  : { color: '#A99CC0' }
-                }
+                className={`px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 nav-link ${pathname === link.href ? 'nav-link-active' : ''}`}
               >
                 {link.label}
               </Link>
@@ -145,8 +107,7 @@ export default function Navbar() {
             <Link
               href="/join"
               onClick={() => setMobileOpen(false)}
-              className="px-4 py-3 rounded-lg text-sm font-semibold text-white text-center mt-2"
-              style={{ background: '#6B3FD4' }}
+              className="nav-cta px-4 py-3 rounded-lg text-sm font-semibold text-center mt-2"
             >
               Join the Club
             </Link>

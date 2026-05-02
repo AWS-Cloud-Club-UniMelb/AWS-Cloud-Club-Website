@@ -189,25 +189,16 @@ export default function CloudMascot({
     return cleanup;
   }, [init]);
 
+  const sizeClass =
+    size === 300 ? "mascot-size-300" : size === 500 ? "mascot-size-500" : "mascot-size-350";
+
   return (
     <div
-      style={{
-        width: size,
-        height: size,
-        willChange: "transform",
-        animation: isJumping
-          ? "mascot-entrance 1.8s cubic-bezier(0.12, 1, 0.2, 1) forwards"
-          : "none",
-      }}
+      className={`mascot-shell ${sizeClass} ${isJumping ? "mascot-jump" : ""}`}
     >
       <div
         ref={containerRef}
-        className="transition-opacity duration-700"
-        style={{
-          width: size,
-          height: size,
-          opacity: visible ? 1 : 0,
-        }}
+        className={`${sizeClass} transition-opacity duration-700 ${visible ? "opacity-100" : "opacity-0"}`}
       />
     </div>
   );

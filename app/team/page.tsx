@@ -1,6 +1,17 @@
 import AnimatedSection from "@/components/AnimatedSection";
 import TeamCard from "@/components/TeamCard";
 
+type Tone = "purple" | "blue" | "green" | "teal" | "red" | "amber" | "pink";
+
+type TeamMember = {
+  name: string;
+  role: string;
+  bio: string;
+  certifications: string[];
+  initials: string;
+  tone: Tone;
+};
+
 const team = [
   {
     name: "Agam",
@@ -8,7 +19,7 @@ const team = [
     bio: "Final-year Computer Science student. AWS Solutions Architect Professional certified. Previously interned at Atlassian on their infrastructure team.",
     certifications: ["SAP", "CCP"],
     initials: "PM",
-    hue: "rgba(107,63,212,",
+    tone: "purple",
   },
   {
     name: "Kaavya",
@@ -16,7 +27,7 @@ const team = [
     bio: "Software Engineering student specialising in distributed systems. AWS Developer Associate certified. Building developer tooling at a Melbourne startup.",
     certifications: ["DVA", "CCP"],
     initials: "MC",
-    hue: "rgba(59,130,246,",
+    tone: "blue",
   },
   {
     name: "Manu",
@@ -24,7 +35,7 @@ const team = [
     bio: "Specialises in ML infrastructure and data pipelines on AWS. AWS Machine Learning Specialty certified. Research assistant at the Melbourne ML Lab.",
     certifications: ["MLS", "SAA", "CCP"],
     initials: "AR",
-    hue: "rgba(16,185,129,",
+    tone: "green",
   },
   {
     name: "Bhavin",
@@ -32,7 +43,7 @@ const team = [
     bio: "Connects the club with companies actively hiring cloud engineers. Negotiates AWS credit allocations and organises workshop sponsorships.",
     certifications: ["SAA", "SCS"],
     initials: "RS",
-    hue: "rgba(20,184,166,",
+    tone: "teal",
   },
   {
     name: "Shevy",
@@ -40,7 +51,7 @@ const team = [
     bio: "Information Systems student who makes sure every event runs without a glitch. Coordinates workshops, speaker nights, and club socials across the year.",
     certifications: ["CCP"],
     initials: "LF",
-    hue: "rgba(139,92,246,",
+    tone: "purple",
   },
   {
     name: "Hasith",
@@ -48,7 +59,7 @@ const team = [
     bio: "Masters student in IT. Focuses on multi-account AWS architectures and Well-Architected Framework reviews. Previously at a Big 4 consulting firm.",
     certifications: ["SAA", "ANS", "SCS"],
     initials: "NO",
-    hue: "rgba(239,68,68,",
+    tone: "red",
   },
   {
     name: "Soham",
@@ -56,7 +67,7 @@ const team = [
     bio: "Passionate about CI/CD pipelines, Infrastructure-as-Code, and AWS CDK. AWS DevOps Engineer Professional certified. Open-source contributor.",
     certifications: ["DOP", "SAA", "DVA"],
     initials: "JW",
-    hue: "rgba(245,158,11,",
+    tone: "amber",
   },
   {
     name: "Gabriel",
@@ -64,9 +75,9 @@ const team = [
     bio: "Builds connections across the Melbourne tech scene. Manages partnerships with other student societies, graduate programmes, and industry groups.",
     certifications: ["CCP"],
     initials: "SN",
-    hue: "rgba(236,72,153,",
+    tone: "pink",
   },
-];
+] satisfies TeamMember[];
 
 const subcomTeams = [
   {
@@ -80,7 +91,7 @@ const subcomTeams = [
         bio: "Supports social media strategy and content creation for the club.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(236,72,153,",
+        tone: "pink",
       },
       {
         name: "Placeholder",
@@ -88,7 +99,7 @@ const subcomTeams = [
         bio: "Assists with graphic design and visual identity across club materials.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(236,72,153,",
+        tone: "pink",
       },
       {
         name: "Placeholder",
@@ -96,7 +107,7 @@ const subcomTeams = [
         bio: "Helps manage the club's online presence and engagement.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(236,72,153,",
+        tone: "pink",
       },
       {
         name: "Placeholder",
@@ -104,7 +115,7 @@ const subcomTeams = [
         bio: "Supports copywriting and communications for events and announcements.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(236,72,153,",
+        tone: "pink",
       },
     ],
   },
@@ -119,7 +130,7 @@ const subcomTeams = [
         bio: "Assists with logistics and coordination for club workshops and events.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(245,158,11,",
+        tone: "amber",
       },
       {
         name: "Placeholder",
@@ -127,7 +138,7 @@ const subcomTeams = [
         bio: "Helps manage venue bookings and event setup across the semester.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(245,158,11,",
+        tone: "amber",
       },
       {
         name: "Placeholder",
@@ -135,7 +146,7 @@ const subcomTeams = [
         bio: "Supports speaker night coordination and industry guest liaison.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(245,158,11,",
+        tone: "amber",
       },
       {
         name: "Placeholder",
@@ -143,7 +154,7 @@ const subcomTeams = [
         bio: "Assists with hackathon planning and participant experience.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(245,158,11,",
+        tone: "amber",
       },
     ],
   },
@@ -158,7 +169,7 @@ const subcomTeams = [
         bio: "Full-stack developer.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(59,130,246,",
+        tone: "blue",
       },
       {
         name: "Claire",
@@ -166,7 +177,7 @@ const subcomTeams = [
         bio: "Full-stack developer.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(59,130,246,",
+        tone: "blue",
       },
       {
         name: "Placeholder",
@@ -174,7 +185,7 @@ const subcomTeams = [
         bio: "Supports cloud infrastructure setup for club projects and events.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(59,130,246,",
+        tone: "blue",
       },
       {
         name: "Placeholder",
@@ -182,7 +193,7 @@ const subcomTeams = [
         bio: "Contributes to certification study resources and member tooling.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(59,130,246,",
+        tone: "blue",
       },
     ],
   },
@@ -197,7 +208,7 @@ const subcomTeams = [
         bio: "Assists with membership records and club administration tasks.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(16,185,129,",
+        tone: "green",
       },
       {
         name: "Placeholder",
@@ -205,7 +216,7 @@ const subcomTeams = [
         bio: "Supports budgeting and financial tracking across club activities.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(16,185,129,",
+        tone: "green",
       },
       {
         name: "Placeholder",
@@ -213,7 +224,7 @@ const subcomTeams = [
         bio: "Helps coordinate internal communications and committee operations.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(16,185,129,",
+        tone: "green",
       },
       {
         name: "Placeholder",
@@ -221,53 +232,42 @@ const subcomTeams = [
         bio: "Assists with sponsorship documentation and partner onboarding.",
         certifications: ["CCP"],
         initials: "PS",
-        hue: "rgba(16,185,129,",
+        tone: "green",
       },
     ],
   },
-];
+] satisfies Array<{ team: string; description: string; members: TeamMember[] }>;
 
 export default function TeamPage() {
   return (
     <>
       {/* Hero */}
       <section
-        className="relative pt-40 pb-20 grid-bg overflow-hidden"
-        style={{
-          background:
-            "radial-gradient(ellipse 50% 60% at 80% 40%, rgba(107,63,212,0.08), transparent 65%), var(--color-bg-primary)",
-        }}
+        className="hero-team-bg relative pt-40 pb-20 grid-bg overflow-hidden"
       >
         <div
-          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to top, var(--color-bg-primary), transparent)",
-          }}
+          className="bottom-fade absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
         />
         <div className="max-w-7xl mx-auto px-6">
           <AnimatedSection>
             <p
-              className="text-xs font-semibold uppercase tracking-widest mb-5"
-              style={{ color: "#8B5CF6" }}
+              className="text-xs font-semibold uppercase tracking-widest mb-5 text-accent"
             >
               The team
             </p>
           </AnimatedSection>
           <AnimatedSection delay={0.06}>
             <h1
-              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.02] max-w-3xl mb-6"
-              style={{ color: "#F0ECFF" }}
+              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.02] max-w-3xl mb-6 text-primary"
             >
               The people
               <br />
-              <span style={{ color: "#5C5275" }}>behind the club.</span>
+              <span className="text-muted">behind the club.</span>
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={0.12}>
             <p
-              className="text-base leading-relaxed max-w-[52ch]"
-              style={{ color: "#A99CC0" }}
+              className="text-base leading-relaxed max-w-[52ch] text-secondary"
             >
               A committee of eight students dedicated to building
               Melbourne&apos;s strongest AWS learning community from the ground
@@ -292,26 +292,22 @@ export default function TeamPage() {
       {subcomTeams.map((group, gi) => (
         <section
           key={group.team}
-          className="py-20 max-w-7xl mx-auto px-6"
-          style={gi !== 0 ? { borderTop: "1px solid var(--color-border)" } : {}}
+          className={`py-20 max-w-7xl mx-auto px-6 ${gi !== 0 ? "border-t-default" : ""}`}
         >
           <AnimatedSection>
             <div className="mb-14">
               <p
-                className="text-xs font-semibold uppercase tracking-widest mb-4"
-                style={{ color: "#8B5CF6" }}
+                className="text-xs font-semibold uppercase tracking-widest mb-4 text-accent"
               >
                 Subcommittee
               </p>
               <h2
-                className="text-4xl font-bold tracking-tighter mb-3"
-                style={{ color: "#F0ECFF" }}
+                className="text-4xl font-bold tracking-tighter mb-3 text-primary"
               >
                 {group.team} Team
               </h2>
               <p
-                className="text-base leading-relaxed max-w-[52ch]"
-                style={{ color: "#A99CC0" }}
+                className="text-base leading-relaxed max-w-[52ch] text-secondary"
               >
                 {group.description}
               </p>
@@ -329,30 +325,23 @@ export default function TeamPage() {
 
       {/* Join the team */}
       <section
-        className="py-24"
-        style={{
-          borderTop: "1px solid var(--color-border)",
-          background: "rgba(18,16,30,0.3)",
-        }}
+        className="py-24 border-t-default bg-overlay-30"
       >
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <AnimatedSection direction="left" className="lg:col-span-7">
               <p
-                className="text-xs font-semibold uppercase tracking-widest mb-4"
-                style={{ color: "#8B5CF6" }}
+                className="text-xs font-semibold uppercase tracking-widest mb-4 text-accent"
               >
                 Committee applications
               </p>
               <h2
-                className="text-3xl md:text-4xl font-bold tracking-tighter leading-tight mb-4"
-                style={{ color: "#F0ECFF" }}
+                className="text-3xl md:text-4xl font-bold tracking-tighter leading-tight mb-4 text-primary"
               >
                 Want to help lead the club?
               </h2>
               <p
-                className="text-base leading-relaxed max-w-[50ch]"
-                style={{ color: "#A99CC0" }}
+                className="text-base leading-relaxed max-w-[50ch] text-secondary"
               >
                 Committee applications open at the start of each semester. We
                 look for initiative, a genuine interest in cloud technology, and
@@ -372,11 +361,8 @@ export default function TeamPage() {
                   "Direct industry exposure",
                 ].map((point) => (
                   <div key={point} className="flex items-center gap-3">
-                    <div
-                      className="w-1.5 h-1.5 rounded-full shrink-0"
-                      style={{ background: "#8B5CF6" }}
-                    />
-                    <span className="text-sm" style={{ color: "#A99CC0" }}>
+                    <div className="bg-accent w-1.5 h-1.5 rounded-full shrink-0" />
+                    <span className="text-sm text-secondary">
                       {point}
                     </span>
                   </div>
