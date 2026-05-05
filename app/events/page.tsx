@@ -1,5 +1,6 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { CalendarBlank, MapPin, Users, ArrowRight, Clock } from '@phosphor-icons/react/dist/ssr'
+import { MapPinIcon, UsersIcon, ArrowRightIcon, ClockIcon } from '@phosphor-icons/react/dist/ssr'
 import AnimatedSection from '@/components/AnimatedSection'
 import HeroEventWords from '@/components/HeroEventWords'
 import EventCarousel from '@/components/EventCarousel'
@@ -67,7 +68,7 @@ export default function EventsPage() {
                     href="#upcoming"
                     className="btn-accent inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm active:scale-[0.98]"
                   >
-                    Upcoming events <ArrowRight size={15} weight="bold" />
+                    Upcoming events <ArrowRightIcon size={15} weight="bold" />
                   </Link>
                   <Link
                     href="#past"
@@ -144,84 +145,73 @@ export default function EventsPage() {
           </div>
         </AnimatedSection>
 
-        {/* Featured first upcoming event */}
-        <AnimatedSection className="mb-4">
-          <div className="featured-card relative overflow-hidden rounded-2xl p-8 md:p-10">
-            <div className="featured-orb absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none" />
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-8">
-                <div className="flex items-center gap-3 mb-5">
-                  <CategoryBadge
-                    label={upcomingEvents[0].category}
-                    tone={upcomingEvents[0].categoryTone}
-                  />
-                  <span className="text-xs font-mono text-muted">
-                    {upcomingEvents[0].date}
-                  </span>
-                  <span className="badge badge-tone tone-green">Open</span>
-                </div>
-                <h3 className="text-2xl md:text-3xl font-bold tracking-tighter mb-4 text-primary">
-                  {upcomingEvents[0].title}
-                </h3>
-                <p className="text-sm leading-relaxed mb-6 max-w-[58ch] text-secondary">
-                  {upcomingEvents[0].description}
-                </p>
-                <div className="flex flex-wrap gap-5">
-                  {[
-                    { icon: Clock,  text: upcomingEvents[0].time },
-                    { icon: MapPin, text: upcomingEvents[0].location },
-                    { icon: Users,  text: `${upcomingEvents[0].spotsLeft} spots remaining` },
-                  ].map(({ icon: Icon, text }) => (
-                    <div key={text} className="flex items-center gap-2 text-xs text-muted">
-                      <Icon size={13} />{text}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 py-4 px-2">
+          {upcomingEvents.map((event, i) => (
+            <AnimatedSection key={event.id} delay={i * 0.1} className="h-full">
+              <div className={`upcoming-card-outer tone-${event.categoryTone}`}>
+                <div className={`upcoming-event-card tone-${event.categoryTone}`}>
+                  <div className="upcoming-event-card-inner">
+                    {/* Poster */}
+                    <div className="event-poster-slot">
+                      {event.posterUrl ? (
+                        <Image
+                          src={event.posterUrl}
+                          alt={event.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                      ) : (
+                        <div className="event-poster-label">
+                          <span className="text-xs font-mono font-semibold uppercase tracking-widest opacity-60">
+                            {event.category}
+                          </span>
+                          <span className="text-[10px] opacity-40">Poster coming soon</span>
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className="lg:col-span-4 lg:text-right flex lg:justify-end">
-                <Link
-                  href="/join"
-                  className="btn-accent inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm active:scale-[0.98]"
-                >
-                  Register <ArrowRight size={14} weight="bold" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
 
-        {/* Remaining upcoming events */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {upcomingEvents.slice(1).map((event, i) => (
-            <AnimatedSection key={event.id} delay={i * 0.08}>
-              <div className="card-interactive h-full p-7 rounded-2xl bg-card border-default">
-                <div className="mb-4">
-                  <CategoryBadge label={event.category} tone={event.categoryTone} />
-                </div>
-                <h3 className="text-lg font-semibold tracking-tight mb-3 text-primary">
-                  {event.title}
-                </h3>
-                <p className="text-sm leading-relaxed mb-5 text-muted">
-                  {event.description}
-                </p>
-                <div className="space-y-2 mb-6">
-                  {[
-                    { icon: CalendarBlank, text: event.date },
-                    { icon: Clock,         text: event.time },
-                    { icon: MapPin,        text: event.location },
-                    { icon: Users,         text: `${event.spotsLeft} spots remaining` },
-                  ].map(({ icon: Icon, text }) => (
-                    <div key={text} className="flex items-center gap-2 text-xs text-muted">
-                      <Icon size={12} />{text}
+                    {/* Content */}
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-3">
+                        <CategoryBadge label={event.category} tone={event.categoryTone} />
+                        <span className="font-mono text-xs text-muted">{event.date}</span>
+                        <span className="badge badge-tone tone-green">Open</span>
+                        {event.isHybrid && (
+                          <span className="badge badge-tone tone-blue">Hybrid</span>
+                        )}
+                      </div>
+
+                      <h3 className="text-lg font-semibold tracking-tight mb-2 text-primary leading-snug">
+                        {event.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed text-muted mb-4 line-clamp-3">
+                        {event.description}
+                      </p>
+
+                      <div className="space-y-1.5 mb-5">
+                        {[
+                          { icon: ClockIcon,  text: event.time },
+                          { icon: MapPinIcon, text: event.location },
+                          { icon: UsersIcon,  text: `${event.spotsLeft} spots remaining` },
+                        ].map(({ icon: Icon, text }) => (
+                          <div key={text} className="flex items-center gap-2 text-xs text-muted">
+                            <Icon size={12} />{text}
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="mt-auto">
+                        <Link
+                          href={`/events/${event.id}/register`}
+                          className="btn-accent inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm active:scale-[0.98]"
+                        >
+                          Register <ArrowRightIcon size={14} weight="bold" />
+                        </Link>
+                      </div>
                     </div>
-                  ))}
+                  </div>
                 </div>
-                <Link
-                  href="/join"
-                  className="inline-flex items-center gap-2 text-xs font-semibold text-accent"
-                >
-                  Register <ArrowRight size={12} weight="bold" />
-                </Link>
               </div>
             </AnimatedSection>
           ))}
@@ -252,7 +242,7 @@ export default function EventsPage() {
                     href="/join"
                     className="btn-accent inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm active:scale-[0.98]"
                   >
-                    Join Now <ArrowRight size={15} weight="bold" />
+                    Join Now <ArrowRightIcon size={15} weight="bold" />
                   </Link>
                   <span className="text-xs text-muted">Free for all UniMelb students</span>
                 </div>
@@ -279,7 +269,7 @@ export default function EventsPage() {
               href="/join"
               className="btn-accent flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm active:scale-[0.98] shrink-0"
             >
-              Join Now <ArrowRight size={16} weight="bold" />
+              Join Now <ArrowRightIcon size={16} weight="bold" />
             </Link>
           </div>
         </AnimatedSection>

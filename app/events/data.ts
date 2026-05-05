@@ -28,6 +28,7 @@ export interface UpcomingEvent {
   categoryTone: string
   description: string
   spotsLeft: number
+  posterUrl?: string
   rsvpUrl?: string
   isHybrid?: boolean
   zoomUrl?: string

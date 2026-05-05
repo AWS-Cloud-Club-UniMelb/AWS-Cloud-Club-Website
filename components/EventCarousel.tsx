@@ -2,7 +2,7 @@
 import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { CalendarBlank, MapPin, Users, ArrowRight, CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr'
+import { MapPinIcon, UsersIcon, ArrowRightIcon, CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react/dist/ssr'
 import type { PastEvent } from '@/app/events/data'
 
 function CategoryBadge({ label, tone }: { label: string; tone: string }) {
@@ -16,38 +16,44 @@ const PHOTO_GRADIENTS = [
   'event-photo-grad-d',
 ]
 
-function EventCard({ event }: { event: PastEvent }) {
+function EventCard({ event, index }: { event: PastEvent; index: number }) {
   return (
-    <div className="event-carousel-card card-interactive rounded-2xl bg-card border-default overflow-hidden shrink-0">
-      {/* Photo placeholder */}
-      <div className={`event-card-photo ${PHOTO_GRADIENTS[0]} tone-${event.categoryTone}`} />
+    <div className={`past-card-outer tone-${event.categoryTone}`}>
+      <div className={`past-event-card tone-${event.categoryTone}`}>
+        <div className="past-event-card-inner card-interactive">
+          {/* Photo placeholder */}
+          <div className={`event-card-photo ${PHOTO_GRADIENTS[index % PHOTO_GRADIENTS.length]} tone-${event.categoryTone}`} />
 
-      <div className="p-6">
-        <div className="flex items-center gap-3 mb-3">
-          <CategoryBadge label={event.category} tone={event.categoryTone} />
-          <span className="font-mono text-xs text-muted">{event.date}</span>
-        </div>
-        <h3 className="text-base font-semibold tracking-tight mb-2 text-primary leading-snug">
-          {event.title}
-        </h3>
-        <p className="text-sm leading-relaxed text-muted mb-4 line-clamp-2">
-          {event.highlight}
-        </p>
-        <div className="flex items-center gap-4 mb-5">
-          <div className="flex items-center gap-1.5 text-xs text-muted">
-            <MapPin size={12} />
-            <span className="truncate max-w-[18ch]">{event.location}</span>
+          <div className="p-6 flex flex-col flex-1">
+            <div className="flex items-center gap-3 mb-3">
+              <CategoryBadge label={event.category} tone={event.categoryTone} />
+              <span className="font-mono text-xs text-muted">{event.date}</span>
+            </div>
+            <h3 className="text-base font-semibold tracking-tight mb-2 text-primary leading-snug">
+              {event.title}
+            </h3>
+            <p className="text-sm leading-relaxed text-muted mb-4 line-clamp-2">
+              {event.highlight}
+            </p>
+            <div className="flex items-center gap-4 mb-5">
+              <div className="flex items-center gap-1.5 text-xs text-muted">
+                <MapPinIcon size={12} />
+                <span className="truncate max-w-[18ch]">{event.location}</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs text-muted">
+                <UsersIcon size={12} />{event.attendees} attended
+              </div>
+            </div>
+            <div className="mt-auto">
+              <Link
+                href={`/events/${event.id}`}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent event-card-link"
+              >
+                Read more <ArrowRightIcon size={12} weight="bold" />
+              </Link>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-muted">
-            <Users size={12} />{event.attendees} attended
-          </div>
         </div>
-        <Link
-          href={`/events/${event.id}`}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent event-card-link"
-        >
-          Read more <ArrowRight size={12} weight="bold" />
-        </Link>
       </div>
     </div>
   )
@@ -90,8 +96,8 @@ export default function EventCarousel({ events }: { events: PastEvent[] }) {
         onScroll={handleScroll}
         className="event-carousel-track"
       >
-        {events.map(event => (
-          <EventCard key={event.id} event={event} />
+        {events.map((event, i) => (
+          <EventCard key={event.id} event={event} index={i} />
         ))}
       </div>
 
@@ -117,7 +123,7 @@ export default function EventCarousel({ events }: { events: PastEvent[] }) {
             className="carousel-arrow"
             aria-label="Previous event"
           >
-            <CaretLeft size={16} weight="bold" />
+            <CaretLeftIcon size={16} weight="bold" />
           </button>
           <button
             onClick={() => scrollTo(current + 1)}
@@ -125,7 +131,7 @@ export default function EventCarousel({ events }: { events: PastEvent[] }) {
             className="carousel-arrow"
             aria-label="Next event"
           >
-            <CaretRight size={16} weight="bold" />
+            <CaretRightIcon size={16} weight="bold" />
           </button>
         </div>
       </div>
