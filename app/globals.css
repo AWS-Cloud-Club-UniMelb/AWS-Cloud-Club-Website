@@ -515,73 +515,20 @@ body {
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding: 12px 8px 14px;
+  /* 16px top/bottom gives the ::before glow (inset: -8px) room to show */
+  padding: 16px 12px 20px;
 }
 .event-carousel-track::-webkit-scrollbar { display: none; }
 
-/* Past event card — three-layer glow system (mirrors upcoming cards) */
-.past-card-outer {
-  position: relative;
-  border-radius: 1rem;
+/* Carousel item sizing — animation comes from upcoming-card-outer/event-card */
+.carousel-card {
   width: 320px;
   scroll-snap-align: start;
   flex-shrink: 0;
 }
 
 @media (min-width: 768px) {
-  .past-card-outer { width: 360px; }
-}
-
-.past-card-outer::before {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  border-radius: calc(1rem + 8px);
-  background: conic-gradient(
-    from var(--border-angle),
-    transparent 0%,
-    transparent 60%,
-    color-mix(in srgb, var(--tone, var(--color-accent-primary)) 35%, transparent) 68%,
-    color-mix(in srgb, var(--tone, var(--color-accent-primary)) 75%, transparent) 76%,
-    rgba(255,255,255,0.55) 79%,
-    color-mix(in srgb, var(--color-accent-secondary) 75%, transparent) 82%,
-    transparent 91%,
-    transparent 100%
-  );
-  animation: upcoming-border-spin 5s linear infinite;
-  filter: blur(14px);
-  opacity: 0.8;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.past-event-card {
-  position: relative;
-  z-index: 1;
-  border-radius: 1rem;
-  padding: 1.5px;
-  height: 100%;
-  background: conic-gradient(
-    from var(--border-angle),
-    transparent 0%,
-    transparent 60%,
-    color-mix(in srgb, var(--tone, var(--color-accent-primary)) 55%, transparent) 68%,
-    var(--tone, var(--color-accent-primary)) 76%,
-    #ffffff 79%,
-    var(--color-accent-secondary) 82%,
-    transparent 91%,
-    transparent 100%
-  );
-  animation: upcoming-border-spin 5s linear infinite;
-}
-
-.past-event-card-inner {
-  border-radius: calc(1rem - 1.5px);
-  background: var(--color-card);
-  overflow: hidden;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  .carousel-card { width: 360px; }
 }
 
 .event-card-photo {

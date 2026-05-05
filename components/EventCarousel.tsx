@@ -1,8 +1,8 @@
 'use client'
 import { useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
-import { MapPinIcon, UsersIcon, ArrowRightIcon, CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react/dist/ssr'
+import { CalendarBlankIcon, MapPinIcon, UsersIcon, ArrowRightIcon, CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react/dist/ssr'
 import type { PastEvent } from '@/app/events/data'
 
 function CategoryBadge({ label, tone }: { label: string; tone: string }) {
@@ -18,38 +18,53 @@ const PHOTO_GRADIENTS = [
 
 function EventCard({ event, index }: { event: PastEvent; index: number }) {
   return (
-    <div className={`past-card-outer tone-${event.categoryTone}`}>
-      <div className={`past-event-card tone-${event.categoryTone}`}>
-        <div className="past-event-card-inner card-interactive">
-          {/* Photo placeholder */}
-          <div className={`event-card-photo ${PHOTO_GRADIENTS[index % PHOTO_GRADIENTS.length]} tone-${event.categoryTone}`} />
+    <div className={`upcoming-card-outer carousel-card tone-${event.categoryTone}`}>
+      <div className={`upcoming-event-card tone-${event.categoryTone}`}>
+        <div className="upcoming-event-card-inner">
+          {/* Photo slot */}
+          {(() => {
+            const photo = event.photos?.find(p => p)
+            return (
+              <div className={`event-card-photo ${PHOTO_GRADIENTS[index % PHOTO_GRADIENTS.length]} tone-${event.categoryTone}`}>
+                {photo && (
+                  <Image src={photo} alt={event.title} fill className="object-cover" sizes="360px" />
+                )}
+              </div>
+            )
+          })()}
 
+          {/* Content */}
           <div className="p-6 flex flex-col flex-1">
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
               <CategoryBadge label={event.category} tone={event.categoryTone} />
               <span className="font-mono text-xs text-muted">{event.date}</span>
             </div>
-            <h3 className="text-base font-semibold tracking-tight mb-2 text-primary leading-snug">
+
+            <h3 className="text-lg font-semibold tracking-tight mb-2 text-primary leading-snug">
               {event.title}
             </h3>
-            <p className="text-sm leading-relaxed text-muted mb-4 line-clamp-2">
+            <p className="text-sm leading-relaxed text-muted mb-4 line-clamp-3">
               {event.highlight}
             </p>
-            <div className="flex items-center gap-4 mb-5">
-              <div className="flex items-center gap-1.5 text-xs text-muted">
-                <MapPinIcon size={12} />
-                <span className="truncate max-w-[18ch]">{event.location}</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-muted">
-                <UsersIcon size={12} />{event.attendees} attended
-              </div>
+
+            <div className="space-y-1.5 mb-5">
+              {[
+                { icon: CalendarBlankIcon, text: event.date },
+                { icon: MapPinIcon,        text: event.location },
+                { icon: UsersIcon,         text: `${event.attendees} attended` },
+              ].map(({ icon: Icon, text }) => (
+                <div key={text} className="flex items-center gap-2 text-xs text-muted">
+                  <Icon size={12} />{text}
+                </div>
+              ))}
             </div>
+
             <div className="mt-auto">
               <Link
                 href={`/events/${event.id}`}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent event-card-link"
+                className="btn-ghost inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm"
               >
-                Read more <ArrowRightIcon size={12} weight="bold" />
+                View recap <ArrowRightIcon size={14} weight="bold" />
               </Link>
             </div>
           </div>

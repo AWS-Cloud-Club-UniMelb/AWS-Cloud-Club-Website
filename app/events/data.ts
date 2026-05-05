@@ -47,7 +47,7 @@ export const pastEvents: PastEvent[] = [
     attendees: 100,
     highlight:
       'Over 100 students showed up to our very first event — coffee in hand, questions ready, and zero experience required.',
-    photos: ['', '', '', ''],
+    photos: ['/events/photos/first-event-mar26/event-flyer.jpg', '/events/photos/first-event-mar26/imag3.jpg', '/events/photos/first-event-mar26/image2.jpg' ],
     docLinks: [],
     youtubeUrl: '',
   },
