@@ -1,5 +1,6 @@
 import AnimatedSection from "@/components/AnimatedSection";
 import TeamCard from "@/components/TeamCard";
+import { objectScale } from "three/tsl";
 
 const team = [
   {
@@ -9,6 +10,7 @@ const team = [
     certifications: ["SAP", "CCP"],
     initials: "PM",
     hue: "rgba(107,63,212,",
+    image: "/team-pics/Agam Johal Profile.jpeg",
   },
   {
     name: "Kaavya",
@@ -25,6 +27,7 @@ const team = [
     certifications: ["MLS", "SAA", "CCP"],
     initials: "AR",
     hue: "rgba(16,185,129,",
+    image: "/team-pics/Manu profile pic.jpeg",
   },
   {
     name: "Bhavin",
@@ -33,6 +36,7 @@ const team = [
     certifications: ["SAA", "SCS"],
     initials: "RS",
     hue: "rgba(20,184,166,",
+    image: "/team-pics/Bhavin_Garg_photo.jpg",
   },
   {
     name: "Shevy",
@@ -41,6 +45,7 @@ const team = [
     certifications: ["CCP"],
     initials: "LF",
     hue: "rgba(139,92,246,",
+    image: "/team-pics/Shevy.JPG",
   },
   {
     name: "Hasith",
@@ -49,6 +54,7 @@ const team = [
     certifications: ["SAA", "ANS", "SCS"],
     initials: "NO",
     hue: "rgba(239,68,68,",
+    image: "/team-pics/Hasith, IT Officer (1) 2.jpg",
   },
   {
     name: "Soham",
@@ -159,6 +165,7 @@ const subcomTeams = [
         certifications: ["CCP"],
         initials: "PS",
         hue: "rgba(59,130,246,",
+        image: "/team-pics/Raghav_Dabra.jpeg",
       },
       {
         name: "Claire",
@@ -167,6 +174,7 @@ const subcomTeams = [
         certifications: ["CCP"],
         initials: "PS",
         hue: "rgba(59,130,246,",
+        image: "/team-pics/Claire.jpg",
       },
       {
         name: "Placeholder",
@@ -279,7 +287,7 @@ export default function TeamPage() {
 
       {/* Team grid — uses client TeamCard for per-card color hover */}
       <section className="py-20 max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
           {team.map((member, i) => (
             <AnimatedSection key={member.name} delay={i * 0.07}>
               <TeamCard {...member} />
@@ -317,7 +325,7 @@ export default function TeamPage() {
               </p>
             </div>
           </AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
             {group.members.map((member, i) => (
               <AnimatedSection key={group.team + i} delay={i * 0.07}>
                 <TeamCard {...member} />
