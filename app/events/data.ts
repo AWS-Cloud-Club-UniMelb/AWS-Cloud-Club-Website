@@ -81,7 +81,7 @@ export const pastEvents: PastEvent[] = [
     attendees: 25,
     highlight:
       'Cloud Dojo launched its weekly format: one hour of deep-dive theory, one hour of hands-on building — every Wednesday.',
-    photos: ['', '', ''],
+    photos: ['/events/photos/cloud-dojo-s1-apr26/cloudDojo2.png'],
     docLinks: [ { label: 'Session 1 Slides', url: 'https://drive.google.com/drive/folders/1Jh40_ogpe_wbDz_z8MqLVKkPZWY7JlFC' } ],
     youtubeUrl: 'https://www.youtube.com/@AWS-Unimelb',
   },
@@ -115,6 +115,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     description:
       'Cloud Dojo returns for Session 2. This week we go deep on cloud service models — IaaS, PaaS, and SaaS — and how they map to real AWS architecture decisions. Hour one is theory built for certification and real understanding. Hour two is hands-on building. Can\'t make it in person? Watch the Session 1 recording now on our YouTube channel, CloudLabs @ UniMelb, and join this week\'s session live on Zoom.',
     spotsLeft: 40,
+    posterUrl: '/events/posters/cloudDojo2.png',
     isHybrid: true,
     zoomUrl: 'https://lnkd.in/ga9pZHHu',
   },

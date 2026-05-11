@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { CalendarBlank, MapPin, Users, ArrowLeft, ArrowRight, YoutubeLogoIcon, FileDocIcon } from '@phosphor-icons/react/dist/ssr'
+import { CalendarBlankIcon, MapPinIcon, UsersIcon, ArrowLeftIcon, ArrowRightIcon, YoutubeLogoIcon, FileDocIcon } from '@phosphor-icons/react/dist/ssr'
 import AnimatedSection from '@/components/AnimatedSection'
 import { pastEvents } from '@/app/events/data'
 
@@ -8,12 +8,6 @@ function CategoryBadge({ label, tone }: { label: string; tone: string }) {
   return <span className={`badge badge-tone tone-${tone}`}>{label}</span>
 }
 
-const PHOTO_TONES = [
-  'event-photo-grad-a',
-  'event-photo-grad-b',
-  'event-photo-grad-c',
-  'event-photo-grad-d',
-]
 
 export function generateStaticParams() {
   return pastEvents.map(e => ({ id: e.id }))
@@ -24,7 +18,8 @@ export default async function EventDetailPage(props: PageProps<'/events/[id]'>) 
   const event = pastEvents.find(e => e.id === id)
   if (!event) notFound()
 
-  const photoCount = event.photos.length
+  const validPhotos = event.photos.filter(p => p)
+  const photoCount = validPhotos.length
 
   return (
     <>
@@ -39,7 +34,7 @@ export default async function EventDetailPage(props: PageProps<'/events/[id]'>) 
               href="/events#past"
               className="inline-flex items-center gap-2 text-xs text-muted mb-8 event-back-link"
             >
-              <ArrowLeft size={13} weight="bold" /> Back to Events
+              <ArrowLeftIcon size={13} weight="bold" /> Back to Events
             </Link>
           </AnimatedSection>
 
@@ -59,13 +54,13 @@ export default async function EventDetailPage(props: PageProps<'/events/[id]'>) 
           <AnimatedSection delay={0.12}>
             <div className="flex flex-wrap gap-5 mb-8">
               <div className="flex items-center gap-2 text-sm text-muted">
-                <CalendarBlank size={14} />{event.date}
+                <CalendarBlankIcon size={14} />{event.date}
               </div>
               <div className="flex items-center gap-2 text-sm text-muted">
-                <MapPin size={14} />{event.location}
+                <MapPinIcon size={14} />{event.location}
               </div>
               <div className="flex items-center gap-2 text-sm text-muted">
-                <Users size={14} />{event.attendees} attended
+                <UsersIcon size={14} />{event.attendees} attended
               </div>
             </div>
           </AnimatedSection>
@@ -73,22 +68,26 @@ export default async function EventDetailPage(props: PageProps<'/events/[id]'>) 
       </section>
 
       {/* ── Photo Gallery ─────────────────────────────────────────────────────── */}
-      <section className="py-20 max-w-7xl mx-auto px-6">
-        <AnimatedSection>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-8 text-accent">Gallery</p>
-        </AnimatedSection>
+      {photoCount > 0 && (
+        <section className="py-20 max-w-7xl mx-auto px-6">
+          <AnimatedSection>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-8 text-accent">
+              Gallery{photoCount > 1 && <span className="ml-2 font-normal normal-case text-muted">— scroll to see all</span>}
+            </p>
+          </AnimatedSection>
 
-        <AnimatedSection delay={0.06}>
-          <div className={`event-photo-grid event-photo-grid-${Math.min(photoCount, 4)}`}>
-            {event.photos.map((_, i) => (
-              <div
-                key={i}
-                className={`event-photo-slot tone-${event.categoryTone} ${PHOTO_TONES[i % PHOTO_TONES.length]} ${i === 0 ? 'event-photo-featured' : ''}`}
-              />
-            ))}
-          </div>
-        </AnimatedSection>
-      </section>
+          <AnimatedSection delay={0.06}>
+            <div className="photo-gallery-track">
+              {validPhotos.map((photo, i) => (
+                <div key={i} className="photo-gallery-item">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={photo} alt={`${event.title} — photo ${i + 1}`} />
+                </div>
+              ))}
+            </div>
+          </AnimatedSection>
+        </section>
+      )}
 
       {/* ── Description ──────────────────────────────────────────────────────── */}
       <section className="py-4 pb-20 max-w-7xl mx-auto px-6">
@@ -130,7 +129,7 @@ export default async function EventDetailPage(props: PageProps<'/events/[id]'>) 
                   >
                     <YoutubeLogoIcon size={18} weight="duotone" />
                     Watch recording
-                    <ArrowRight size={13} weight="bold" className="ml-auto" />
+                    <ArrowRightIcon size={13} weight="bold" className="ml-auto" />
                   </a>
                 </AnimatedSection>
               )}
@@ -145,7 +144,7 @@ export default async function EventDetailPage(props: PageProps<'/events/[id]'>) 
                   >
                     <FileDocIcon size={18} weight="duotone" />
                     {doc.label}
-                    <ArrowRight size={13} weight="bold" className="ml-auto" />
+                    <ArrowRightIcon size={13} weight="bold" className="ml-auto" />
                   </a>
                 </AnimatedSection>
               ))}
@@ -164,10 +163,10 @@ export default async function EventDetailPage(props: PageProps<'/events/[id]'>) 
             </div>
             <div className="flex gap-3 shrink-0">
               <Link href="/events#past" className="btn-ghost inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm">
-                <ArrowLeft size={14} weight="bold" /> All Events
+                <ArrowLeftIcon size={14} weight="bold" /> All Events
               </Link>
               <Link href="/join" className="btn-accent inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm active:scale-[0.98]">
-                Join the club <ArrowRight size={14} weight="bold" />
+                Join the club <ArrowRightIcon size={14} weight="bold" />
               </Link>
             </div>
           </div>

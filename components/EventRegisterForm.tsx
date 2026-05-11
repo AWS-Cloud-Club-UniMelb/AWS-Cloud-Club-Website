@@ -36,11 +36,16 @@ const initial: FormData = {
   course: '', year: '', notes: '',
 }
 
+// Paste your Formspree endpoint here after creating a form at formspree.io/new
+// Free tier: 50 submissions/month. Step-by-step below in the README.
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
+
 export default function EventRegisterForm({ event }: { event: EventMeta }) {
-  const [form,      setForm]      = useState<FormData>(initial)
-  const [errors,    setErrors]    = useState<Partial<FormData>>({})
-  const [submitted, setSubmitted] = useState(false)
-  const [loading,   setLoading]   = useState(false)
+  const [form,        setForm]        = useState<FormData>(initial)
+  const [errors,      setErrors]      = useState<Partial<FormData>>({})
+  const [submitted,   setSubmitted]   = useState(false)
+  const [loading,     setLoading]     = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const update = (field: keyof FormData, value: string) => {
     setForm(prev => ({ ...prev, [field]: value }))
@@ -63,9 +68,38 @@ export default function EventRegisterForm({ event }: { event: EventMeta }) {
     ev.preventDefault()
     if (!validate()) return
     setLoading(true)
-    await new Promise(r => setTimeout(r, 1200))
-    setLoading(false)
-    setSubmitted(true)
+    setSubmitError('')
+
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: `Event Registration: ${event.title}`,
+          _replyto: form.email,
+          Event:           event.title,
+          'Event Date':    event.date,
+          'Event ID':      event.id,
+          'First Name':    form.firstName,
+          'Last Name':     form.lastName,
+          Email:           form.email,
+          Course:          form.course,
+          'Year of Study': form.year,
+          Notes:           form.notes || '—',
+        }),
+      })
+
+      if (res.ok) {
+        setSubmitted(true)
+      } else {
+        const data = await res.json().catch(() => ({}))
+        setSubmitError((data as { error?: string }).error ?? 'Something went wrong — please try again.')
+      }
+    } catch {
+      setSubmitError('Network error — check your connection and try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -219,6 +253,11 @@ export default function EventRegisterForm({ event }: { event: EventMeta }) {
               onChange={e => update('notes', e.target.value)}
             />
           </div>
+
+          {/* Submit error */}
+          {submitError && (
+            <p className="text-xs text-red-400 text-center -mb-2">{submitError}</p>
+          )}
 
           {/* Submit */}
           <button

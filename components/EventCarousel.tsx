@@ -27,7 +27,7 @@ function EventCard({ event, index }: { event: PastEvent; index: number }) {
             return (
               <div className={`event-card-photo ${PHOTO_GRADIENTS[index % PHOTO_GRADIENTS.length]} tone-${event.categoryTone}`}>
                 {photo && (
-                  <Image src={photo} alt={event.title} fill className="object-cover" sizes="360px" />
+                  <Image src={photo} alt={event.title} fill className="object-contain" sizes="360px" />
                 )}
               </div>
             )

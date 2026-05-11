@@ -158,7 +158,7 @@ export default function EventsPage() {
                           src={event.posterUrl}
                           alt={event.title}
                           fill
-                          className="object-cover"
+                          className="object-contain"
                           sizes="(max-width: 768px) 100vw, 50vw"
                         />
                       ) : (
