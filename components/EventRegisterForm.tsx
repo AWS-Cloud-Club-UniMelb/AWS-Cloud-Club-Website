@@ -26,19 +26,19 @@ type FormData = {
   firstName: string
   lastName: string
   email: string
+  studentId: string
   course: string
   year: string
   notes: string
 }
 
 const initial: FormData = {
-  firstName: '', lastName: '', email: '',
+  firstName: '', lastName: '', email: '', studentId: '',
   course: '', year: '', notes: '',
 }
 
-// Paste your Formspree endpoint here after creating a form at formspree.io/new
-// Free tier: 50 submissions/month. Step-by-step below in the README.
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
+const ENDPOINT = process.env.NEXT_PUBLIC_REGISTRATION_ENDPOINT ?? ''
+const SECRET   = process.env.NEXT_PUBLIC_REGISTRATION_SECRET   ?? ''
 
 export default function EventRegisterForm({ event }: { event: EventMeta }) {
   const [form,        setForm]        = useState<FormData>(initial)
@@ -71,29 +71,29 @@ export default function EventRegisterForm({ event }: { event: EventMeta }) {
     setSubmitError('')
 
     try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
+      const res = await fetch(ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
-          _subject: `Event Registration: ${event.title}`,
-          _replyto: form.email,
-          Event:           event.title,
-          'Event Date':    event.date,
-          'Event ID':      event.id,
-          'First Name':    form.firstName,
-          'Last Name':     form.lastName,
-          Email:           form.email,
-          Course:          form.course,
-          'Year of Study': form.year,
-          Notes:           form.notes || '—',
+          secret:     SECRET,
+          eventId:    event.id,
+          eventTitle: event.title,
+          eventDate:  event.date,
+          firstName:  form.firstName,
+          lastName:   form.lastName,
+          email:      form.email,
+          studentId:  form.studentId,
+          course:     form.course,
+          year:       form.year,
+          notes:      form.notes,
         }),
       })
 
-      if (res.ok) {
+      const data = await res.json().catch(() => ({ ok: false, error: 'Invalid response' })) as { ok?: boolean; error?: string }
+      if (res.ok && data.ok) {
         setSubmitted(true)
       } else {
-        const data = await res.json().catch(() => ({}))
-        setSubmitError((data as { error?: string }).error ?? 'Something went wrong — please try again.')
+        setSubmitError(data.error ?? 'Something went wrong — please try again.')
       }
     } catch {
       setSubmitError('Network error — check your connection and try again.')
@@ -205,6 +205,22 @@ export default function EventRegisterForm({ event }: { event: EventMeta }) {
               onChange={e => update('email', e.target.value)}
             />
             {errors.email && <p className="text-xs text-red-400 mt-1.5">{errors.email}</p>}
+          </div>
+
+          {/* Student ID */}
+          <div>
+            <label className="form-label">
+              UniMelb student ID{' '}
+              <span className="text-muted font-normal">(optional — leave blank if not from UniMelb)</span>
+            </label>
+            <input
+              type="text"
+              inputMode="numeric"
+              className="form-input"
+              placeholder="1234567"
+              value={form.studentId}
+              onChange={e => update('studentId', e.target.value)}
+            />
           </div>
 
           {/* Course + Year */}
