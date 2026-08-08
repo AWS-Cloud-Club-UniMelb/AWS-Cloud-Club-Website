@@ -5,7 +5,7 @@ import AnimatedSection from '@/components/AnimatedSection'
 import HeroEventWords from '@/components/HeroEventWords'
 import EventCarousel from '@/components/EventCarousel'
 import EventCloudMascot from '@/components/EventCloudMascot'
-import { pastEvents, upcomingEvents } from './data'
+import { pastEvents, getUpcomingEvents } from './data'
 
 function CategoryBadge({ label, tone }: { label: string; tone: string }) {
   return <span className={`badge badge-tone tone-${tone}`}>{label}</span>
@@ -18,7 +18,8 @@ const stats = [
   { value: '48h', label: 'Longest hackathon' },
 ]
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  const upcomingEvents = await getUpcomingEvents()
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}

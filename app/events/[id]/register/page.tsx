@@ -10,19 +10,21 @@ import {
 } from '@phosphor-icons/react/dist/ssr'
 import AnimatedSection from '@/components/AnimatedSection'
 import EventRegisterForm from '@/components/EventRegisterForm'
-import { upcomingEvents } from '@/app/events/data'
+import { getUpcomingEvents } from '@/app/events/data'
 
 function CategoryBadge({ label, tone }: { label: string; tone: string }) {
   return <span className={`badge badge-tone tone-${tone}`}>{label}</span>
 }
 
-export function generateStaticParams() {
-  return upcomingEvents.map(e => ({ id: e.id }))
+export async function generateStaticParams() {
+  const events = await getUpcomingEvents()
+  return events.map(e => ({ id: e.id }))
 }
 
 export default async function EventRegisterPage(props: PageProps<'/events/[id]/register'>) {
   const { id } = await props.params
-  const event = upcomingEvents.find(e => e.id === id)
+  const events = await getUpcomingEvents()
+  const event = events.find(e => e.id === id)
   if (!event) notFound()
 
   return (

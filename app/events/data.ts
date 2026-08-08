@@ -1,3 +1,5 @@
+import { cache } from 'react'
+
 export interface DocLink {
   label: string
   url: string
@@ -28,10 +30,11 @@ export interface UpcomingEvent {
   categoryTone: string
   description: string
   spotsLeft: number
-  posterUrl?: string
-  rsvpUrl?: string
+  instagramUrl?: string
   isHybrid?: boolean
   zoomUrl?: string
+  posterUrl?: string
+  rsvpUrl?: string
 }
 
 export const pastEvents: PastEvent[] = [
@@ -103,33 +106,40 @@ export const pastEvents: PastEvent[] = [
   },
 ]
 
-export const upcomingEvents: UpcomingEvent[] = [
-  {
-    id: 'cloud-dojo-s2-may26',
-    title: 'Cloud Dojo — Session 2: Cloud Service Models',
-    date: 'May 6, 2026',
-    time: '5:00 PM – 7:00 PM',
-    location: 'Market Hall L1, Building 189, UniMelb',
-    category: 'Workshop',
-    categoryTone: 'amber',
-    description:
-      'Cloud Dojo returns for Session 2. This week we go deep on cloud service models — IaaS, PaaS, and SaaS — and how they map to real AWS architecture decisions. Hour one is theory built for certification and real understanding. Hour two is hands-on building. Can\'t make it in person? Watch the Session 1 recording now on our YouTube channel, CloudLabs @ UniMelb, and join this week\'s session live on Zoom.',
-    spotsLeft: 40,
-    posterUrl: '/events/posters/cloudDojo2.png',
-    isHybrid: true,
-    zoomUrl: 'https://lnkd.in/ga9pZHHu',
-  },
-  {
-    id: 'ai-studio-s2-may26',
-    title: 'AI Studio — Session 2: Prompt Engineering & Jupyter',
-    date: 'May 11, 2026',
-    time: '5:00 PM – 7:00 PM',
-    location: 'Melbourne Connect, Level 7, UniMelb',
-    category: 'Workshop',
-    categoryTone: 'pink',
-    description:
-      'AI Studio Session 2 dives into two of the most practical skills in modern AI work. Hour one covers prompt engineering — how to write effective prompts for LLMs, chain-of-thought techniques, and patterns that actually work in production. Hour two moves into hands-on ML fundamentals using Jupyter notebooks, where you\'ll run and modify real Python code to understand how models learn from data. No registration required — just show up.',
-    spotsLeft: 30,
-    isHybrid: false,
-  },
-]
+type RawUpcomingEvent = Partial<UpcomingEvent> & { id?: unknown; published?: unknown }
+
+export const getUpcomingEvents = cache(async (): Promise<UpcomingEvent[]> => {
+  const url = process.env.NEXT_PUBLIC_REGISTRATION_ENDPOINT
+  if (!url) {
+    throw new Error('NEXT_PUBLIC_REGISTRATION_ENDPOINT is not set — check .env.local')
+  }
+
+  const res = await fetch(url)
+  if (!res.ok) {
+    throw new Error(`Failed to fetch events: HTTP ${res.status} from ${url}`)
+  }
+
+  const data = (await res.json()) as { ok: boolean; error?: string; events?: RawUpcomingEvent[] }
+  if (!data.ok) {
+    throw new Error(`Events API returned error: ${data.error ?? 'unknown'}`)
+  }
+
+  return (data.events ?? []).map(normalizeUpcomingEvent)
+})
+
+function normalizeUpcomingEvent(raw: RawUpcomingEvent): UpcomingEvent {
+  return {
+    id:           String(raw.id ?? ''),
+    title:        String(raw.title ?? '').trim(),
+    date:         String(raw.date ?? '').trim(),
+    time:         String(raw.time ?? '').trim(),
+    location:     String(raw.location ?? '').trim(),
+    category:     String(raw.category ?? '').trim(),
+    categoryTone: String(raw.categoryTone ?? '').trim(),
+    description:  String(raw.description ?? '').trim(),
+    spotsLeft:    Number(raw.spotsLeft ?? 0),
+    instagramUrl: raw.instagramUrl ? String(raw.instagramUrl).trim() : undefined,
+    isHybrid:     raw.isHybrid === true || String(raw.isHybrid).toLowerCase() === 'true',
+    zoomUrl:      raw.zoomUrl ? String(raw.zoomUrl).trim() : undefined,
+  }
+}
