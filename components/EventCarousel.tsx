@@ -51,7 +51,7 @@ function EventCard({ event, index }: { event: PastEvent; index: number }) {
               {[
                 { icon: CalendarBlankIcon, text: event.date },
                 { icon: MapPinIcon,        text: event.location },
-                { icon: UsersIcon,         text: `${event.attendees} attended` },
+                ...(event.attendees ? [{ icon: UsersIcon, text: `${event.attendees} attended` }] : []),
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-2 text-xs text-muted">
                   <Icon size={12} />{text}

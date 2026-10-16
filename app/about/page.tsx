@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { UMSU_JOIN_URL } from "@/lib/links";
 import {
   ArrowRight,
   Wrench,
@@ -420,7 +421,7 @@ export default function AboutPage() {
               </p>
             </div>
             <Link
-              href="/join"
+              href={UMSU_JOIN_URL} target="_blank" rel="noopener noreferrer"
               className="btn-accent flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm active:scale-[0.98] shrink-0"
             >
               Apply Now <ArrowRight size={16} weight="bold" />

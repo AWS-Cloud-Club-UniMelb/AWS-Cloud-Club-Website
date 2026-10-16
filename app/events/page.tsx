@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { UMSU_JOIN_URL } from '@/lib/links'
 import { MapPinIcon, UsersIcon, ArrowRightIcon, ClockIcon } from '@phosphor-icons/react/dist/ssr'
 import AnimatedSection from '@/components/AnimatedSection'
 import HeroEventWords from '@/components/HeroEventWords'
@@ -12,9 +13,9 @@ function CategoryBadge({ label, tone }: { label: string; tone: string }) {
 }
 
 const stats = [
-  { value: '5+',  label: 'Events run' },
-  { value: '300+', label: 'Members engaged' },
-  { value: '5+',  label: 'Industry partners' },
+  { value: '30+', label: 'Events & workshops' },
+  { value: '50+', label: 'Active members' },
+  { value: '3',   label: 'Industry partners' },
   { value: '48h', label: 'Longest hackathon' },
 ]
 
@@ -23,6 +24,19 @@ export default function EventsPage() {
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}
       <section className="hero-events-bg relative pt-40 pb-28 grid-bg overflow-hidden">
+        {/* Background reel from our events — muted, looping, decorative */}
+        <video
+          className="events-hero-video absolute inset-0 w-full h-full object-cover pointer-events-none"
+          src="/events/events-hero.mp4"
+          poster="/events/events-hero-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+        />
+        <div className="events-hero-video-overlay absolute inset-0 pointer-events-none" />
         <div className="bottom-fade absolute bottom-0 left-0 right-0 h-32 pointer-events-none" />
 
         {/* Ambient orbs */}
@@ -141,7 +155,7 @@ export default function EventsPage() {
         <AnimatedSection>
           <div className="flex items-center gap-3 mb-12">
             <span className="bg-accent w-2 h-2 rounded-full animate-pulse" />
-            <h2 className="text-2xl font-bold tracking-tighter text-primary">Upcoming</h2>
+            <h2 className="text-2xl font-bold tracking-tighter text-primary">Past and upcoming events</h2>
           </div>
         </AnimatedSection>
 
@@ -202,12 +216,14 @@ export default function EventsPage() {
                       </div>
 
                       <div className="mt-auto">
-                        <Link
-                          href={`/events/${event.id}/register`}
+                        <a
+                          href={event.instagramUrl ?? 'https://www.instagram.com/awsunimelb/'}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="btn-accent inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm active:scale-[0.98]"
                         >
-                          Register <ArrowRightIcon size={14} weight="bold" />
-                        </Link>
+                          View on Instagram <ArrowRightIcon size={14} weight="bold" />
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -229,17 +245,18 @@ export default function EventsPage() {
                   Membership
                 </p>
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4 text-primary">
-                  Register with us —&nbsp;<br />
-                  <span className="text-muted">get early access to everything.</span>
+                  Join the club,<br />
+                  <span className="text-muted">stay in the loop.</span>
                 </h2>
                 <p className="text-sm leading-relaxed text-secondary mb-8 max-w-[52ch]">
-                  Members get reserved spots, early registrations, exclusive
-                  workshop materials, and access to our mentorship programme.
-                  Registration is free for all University of Melbourne students.
+                  Members get notified whenever we run a workshop, receive exam
+                  vouchers to help them sit and pass their AWS certification
+                  exams, and get invited to our networking events. Joining is
+                  free for all University of Melbourne students.
                 </p>
                 <div className="flex flex-wrap gap-3 items-center">
                   <Link
-                    href="/join"
+                    href={UMSU_JOIN_URL} target="_blank" rel="noopener noreferrer"
                     className="btn-accent inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm active:scale-[0.98]"
                   >
                     Join Now <ArrowRightIcon size={15} weight="bold" />
@@ -266,7 +283,7 @@ export default function EventsPage() {
               </p>
             </div>
             <Link
-              href="/join"
+              href={UMSU_JOIN_URL} target="_blank" rel="noopener noreferrer"
               className="btn-accent flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm active:scale-[0.98] shrink-0"
             >
               Join Now <ArrowRightIcon size={16} weight="bold" />

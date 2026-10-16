@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { UMSU_JOIN_URL } from '@/lib/links'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { List, X } from '@phosphor-icons/react'
@@ -67,7 +68,7 @@ export default function Navbar() {
         {/* CTA */}
         <div className="hidden md:flex items-center">
           <Link
-            href="/join"
+            href={UMSU_JOIN_URL} target="_blank" rel="noopener noreferrer"
             className="nav-cta px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 active:scale-[0.98]"
           >
             Join the Club
@@ -105,7 +106,7 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              href="/join"
+              href={UMSU_JOIN_URL} target="_blank" rel="noopener noreferrer"
               onClick={() => setMobileOpen(false)}
               className="nav-cta px-4 py-3 rounded-lg text-sm font-semibold text-center mt-2"
             >

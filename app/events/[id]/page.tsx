@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { UMSU_JOIN_URL } from '@/lib/links'
 import { notFound } from 'next/navigation'
 import { CalendarBlankIcon, MapPinIcon, UsersIcon, ArrowLeftIcon, ArrowRightIcon, YoutubeLogoIcon, FileDocIcon } from '@phosphor-icons/react/dist/ssr'
 import AnimatedSection from '@/components/AnimatedSection'
@@ -59,9 +60,11 @@ export default async function EventDetailPage(props: PageProps<'/events/[id]'>) 
               <div className="flex items-center gap-2 text-sm text-muted">
                 <MapPinIcon size={14} />{event.location}
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted">
-                <UsersIcon size={14} />{event.attendees} attended
-              </div>
+              {event.attendees && (
+                <div className="flex items-center gap-2 text-sm text-muted">
+                  <UsersIcon size={14} />{event.attendees} attended
+                </div>
+              )}
             </div>
           </AnimatedSection>
         </div>
@@ -165,7 +168,7 @@ export default async function EventDetailPage(props: PageProps<'/events/[id]'>) 
               <Link href="/events#past" className="btn-ghost inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm">
                 <ArrowLeftIcon size={14} weight="bold" /> All Events
               </Link>
-              <Link href="/join" className="btn-accent inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm active:scale-[0.98]">
+              <Link href={UMSU_JOIN_URL} target="_blank" rel="noopener noreferrer" className="btn-accent inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm active:scale-[0.98]">
                 Join the club <ArrowRightIcon size={14} weight="bold" />
               </Link>
             </div>
