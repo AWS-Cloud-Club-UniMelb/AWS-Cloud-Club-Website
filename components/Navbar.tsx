@@ -8,7 +8,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { List, X } from '@phosphor-icons/react'
 
 const navLinks = [
-  { href: '/about',  label: 'About'  },
   { href: '/team',   label: 'Team'   },
   { href: '/events', label: 'Events' },
 ]

@@ -332,10 +332,10 @@ export default function HomePage() {
                   Apply Now <ArrowRight size={16} weight="bold" />
                 </Link>
                 <Link
-                  href="/about"
+                  href="/events"
                   className="btn-ghost flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm"
                 >
-                  Learn more
+                  View events
                 </Link>
               </div>
             </div>

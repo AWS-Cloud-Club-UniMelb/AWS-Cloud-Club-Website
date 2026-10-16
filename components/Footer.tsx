@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { UMSU_JOIN_URL } from '@/lib/links'
 import { CloudLightning } from '@phosphor-icons/react/dist/ssr'
 
 export default function Footer() {
@@ -39,10 +40,8 @@ export default function Footer() {
             <ul className="flex flex-col gap-3">
               {[
                 { href: '/',       label: 'Home'   },
-                { href: '/about',  label: 'About'  },
                 { href: '/team',   label: 'Team'   },
                 { href: '/events', label: 'Events' },
-                { href: '/join',   label: 'Join'   },
               ].map(link => (
                 <li key={link.href}>
                   <Link href={link.href} className="footer-link text-sm">
@@ -50,6 +49,11 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <a href={UMSU_JOIN_URL} target="_blank" rel="noopener noreferrer" className="footer-link text-sm">
+                  Join
+                </a>
+              </li>
             </ul>
           </div>
 
